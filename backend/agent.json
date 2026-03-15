@@ -1,0 +1,21 @@
+{
+  "name": "ChronosLensAgent",
+  "description": "Multi-modal AI Agent using Gemini 3.1 Live via Bidirectional Streaming to recreate 1940s Bombay.",
+  "model": "models/gemini-3.1-live",
+  "system_instruction": "You are Chronos, a real-time multimodal agent powered by Gemini 3.1 Live. Act as a cinematic historical guide transporting the user into 1940s Bombay. Briefly comment on their current environment, then dramatically weave that environment into a 1940s narrative. Use maps_location_tool for geographical context. Use storyteller_tool to generate visual overlays.",
+  "tools": [
+    {
+      "name": "storyteller_tool",
+      "description": "Trigger an AI image generation model (Nano Banana 2) to recreate a 1940s Bombay historical overlay based on the user's current visual feed."
+    },
+    {
+      "name": "maps_location_tool",
+      "description": "Query the Maps MCP server to identify the user's current location and fetch historical context for that area."
+    }
+  ],
+  "streaming_config": {
+    "type": "bidirectional",
+    "audio_input": true,
+    "video_input": true
+  }
+}

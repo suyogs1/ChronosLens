@@ -1,0 +1,19 @@
+# Global Baseline Styles for Nano Banana 2 "Visual DNA"
+
+DEFAULT_AESTHETIC: "Cinematic lighting, hyper-realistic, 8k resolution, atmospheric depth"
+DEFAULT_TEXTURE: "Subtle film grain, organic imperfections, diffuse lighting"
+
+[ERAS]
+VICTORIAN_LONDON: "Foggy cobblestones, gaslamp illumination, wrought iron details, somber monochrome tones with warm amber flares."
+EDO_TOKYO: "Woodblock print aesthetic, vibrant vermilion, muted indigo, sliding shoji screens, paper lanterns, soft rain."
+MING_BEIJING: "Imperial gold, deep lacquered reds, curved eaves, morning mist, jade accents."
+ROARING_TWENTIES_NY: "Art Deco geometries, high contrast black and white, glinting brass, sharp shadows, pristine marble."
+BELLE_EPOQUE_PARIS: "Exposition Universelle, sepia-toned film grain, early industrial ironwork textures, pastel cafe awnings, impressionistic soft focus."
+1940S_BOMBAY: "Indo-Deco architecture, pastel stucco, humid coastal haze, sepia film grain, warm golden hour light."
+
+[MODIFIERS]
+RAIN: "Wet reflections on surfaces, overcast lighting, distinct water droplets."
+NIGHT: "High contrast chiaroscuro, deep shadows, bright punctuated light sources (lanterns/streetlights)."
+
+[DYNAMIC_DNA_TEMPLATE]
+"Historical Reconstruction of {location}. Era: {era}. Architecture: {architecture}. Atmosphere: {atmosphere}. Lighting: {lighting}."
