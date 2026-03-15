@@ -26,7 +26,7 @@ type MessageHandler = (msg: ServerMessage) => void;
 type StatusHandler = (status: ConnectionStatus) => void;
 type BinaryHandler = (buffer: ArrayBuffer) => void;
 
-const WS_URL = (process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8000") + "/ws/live";
+const WS_URL = "wss://chrono-lens-backend-sknvuepfjq-uc.a.run.app/ws/live";
 const MAX_RETRIES = 1;
 const BASE_RETRY_MS = 8000;
 
