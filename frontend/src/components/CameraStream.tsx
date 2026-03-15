@@ -81,6 +81,7 @@ export default function CameraStream() {
     const [isListening, setIsListening] = useState(false);
     const [visitedMonuments, setVisitedMonuments] = useState<Monument[]>([]);
     const isFramePausedRef = useRef(false);
+    const [facingMode, setFacingMode] = useState<"user" | "environment">("environment");
 
     // ── Persistence: Load Chronos Vault via IndexedDB ──────────────────────
     useEffect(() => {
@@ -291,7 +292,7 @@ export default function CameraStream() {
     // ── WebSocket setup ────────────────────────────────────────────────────────
     useEffect(() => {
         const client = new WebSocketClient(
-            undefined,
+            "ws://localhost:8000/ws/live",
             handleMessage,
             setWsStatus,
             (buffer: ArrayBuffer) => {
@@ -366,7 +367,7 @@ export default function CameraStream() {
     // ── Camera start/stop ──────────────────────────────────────────────────────
     const startStreaming = async () => {
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 }, audio: false });
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720, facingMode: facingMode }, audio: false });
             if (videoRef.current) {
                 videoRef.current.srcObject = stream;
                 streamRef.current = stream;
@@ -382,7 +383,7 @@ export default function CameraStream() {
     };
 
     const stopStreaming = () => {
-        streamRef.current?.getTracks().forEach(t => t.stop());
+        streamRef.current?.getTracks().forEach((t: MediaStreamTrack) => t.stop());
         streamRef.current = null;
         if (frameInterval.current) clearInterval(frameInterval.current);
         frameInterval.current = null;
@@ -424,6 +425,29 @@ export default function CameraStream() {
                         ) : (
                             <button onClick={startStreaming} className="bg-emerald-500/20 text-emerald-400 p-3.5 rounded-full hover:bg-emerald-500/30 transition-all shadow-lg backdrop-blur-xl border border-emerald-500/30">
                                 <Camera size={20} />
+                            </button>
+                        )}
+                        {isStreaming && (
+                            <button
+                                onClick={async () => {
+                                    const newMode = facingMode === "environment" ? "user" : "environment";
+                                    setFacingMode(newMode);
+                                    streamRef.current?.getTracks().forEach((t: MediaStreamTrack) => t.stop());
+                                    try {
+                                        const newStream = await navigator.mediaDevices.getUserMedia({
+                                            video: { width: 1280, height: 720, facingMode: newMode },
+                                            audio: false
+                                        });
+                                        streamRef.current = newStream;
+                                        if (videoRef.current) videoRef.current.srcObject = newStream;
+                                    } catch (e) {
+                                        console.error("[Camera] Switch failed:", e);
+                                    }
+                                }}
+                                className="p-3 rounded-full bg-black/40 border border-white/20 text-white hover:bg-white/20 transition-all text-lg"
+                                title="Switch camera"
+                            >
+                                🔄
                             </button>
                         )}
                         <button
