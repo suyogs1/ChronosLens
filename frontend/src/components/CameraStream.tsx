@@ -291,7 +291,7 @@ export default function CameraStream() {
     // ── WebSocket setup ────────────────────────────────────────────────────────
     useEffect(() => {
         const client = new WebSocketClient(
-            "ws://localhost:8000/ws/live",
+            undefined,
             handleMessage,
             setWsStatus,
             (buffer: ArrayBuffer) => {
